@@ -4,10 +4,12 @@ from turtle import Turtle
 FONT = ("Arial", 20, "normal")
 
 class ScoreBoard(Turtle): 
+    
     def __init__(self):
         super().__init__()
         self.score = 0
-        self.highScore = 0
+        with open("data.txt") as data:
+            self.highScore = int(data.read())
         self.color("white")
         self.penup()
         self.goto(0, 270)
@@ -25,6 +27,8 @@ class ScoreBoard(Turtle):
 
     def reset(self):
         if self.score > self.highScore:
+            with open("data.txt", mode="w") as data:
+                data.write(str(self.score))
             self.highScore = self.score
         self.score = 0
         self.updateScore()
